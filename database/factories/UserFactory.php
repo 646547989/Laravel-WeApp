@@ -13,11 +13,17 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(\App\Models\User::class, function (Faker $faker) {
+    //用户创建时间
+    $created_time=\Carbon\Carbon::now()->toDateTimeString();
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        'password' => bcrypt('admin888'), // secret
         'remember_token' => str_random(10),
+        'intro' => $faker->realText(50),
+        'avatar'        => '/avatar/aratar_'.rand(1, 1697).'.jpg',
+        'created_at' => $created_time,
+        'updated_at' => $created_time,
     ];
 });

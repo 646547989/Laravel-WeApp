@@ -16,8 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('email')->nullable()->unique();
+            $table->string('phone')->nullable()->unique();
+            $table->string('weixin_openid')->unique()->nullable()->comment('用户微信本平台ID');
+            $table->string('weixin_unionid')->unique()->nullable()->comment('用户微信各平台唯一ID');
+            $table->string('password')->nullable();
+            $table->string('avatar')->nullable()->comment('头像');
+            $table->string('intro')->nullable()->comment('简介');
+            $table->integer('notification_count')->unsigned()->default(0)->comment('用户未读数量');
+            $table->timestamp('last_actived_at')->nullable()->comment('最后访问时间');
             $table->rememberToken();
             $table->timestamps();
         });
