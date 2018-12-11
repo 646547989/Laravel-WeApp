@@ -21,8 +21,8 @@
 
     <div class="container">
 
-        @section('content')
-            @endsection
+        @section('body')
+            @show
 
     </div>
 

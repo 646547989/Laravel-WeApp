@@ -9,6 +9,6 @@ class IndexController extends Controller
 {
     public function index(){
 
-        dd(Route::currentRouteName());
+        return view('index.index.index');
     }
 }
