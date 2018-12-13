@@ -1,61 +1,59 @@
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
+<div class="fly-header layui-bg-black">
+    <div class="layui-container">
+        <a class="fly-logo" href="/">
+            <img src="{{asset('/images/logo.png')}}" alt="layui">
+        </a>
+        <ul class="layui-nav fly-nav layui-hide-xs">
+            <li class="layui-nav-item layui-this">
+                <a href="{{route('topics.index')}}"><i class="iconfont icon-jiaoliu"></i>话题</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>案例</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="http://www.layui.com/" target="_blank"><i class="iconfont icon-ui"></i>框架</a>
+            </li>
+        </ul>
 
-            {{-- Collapsed Hamburger --}}
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            {{-- Branding Image --}}
-            <a class="navbar-brand" href="{{ url('/') }}">
-                WeAPP
-            </a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            {{-- Left Side Of Navbar --}}
-            <ul class="nav navbar-nav">
-
-            </ul>
-
-            {{-- Right Side Of Navbar --}}
-            <ul class="nav navbar-nav navbar-right">
-                {{-- Authentication Links --}}
-                @guest
-                    <li><a href="{{route('login')}}">登录</a></li>
-                    <li><a href="{{route('register')}}">注册</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
-                                <img src="https://iocaffcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60"
-                                     class="img-responsive img-circle" width="30px" height="30px">
-                            </span>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                    退出登录
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endguest
-            </ul>
-        </div>
+        <ul class="layui-nav fly-nav-user">
+        @guest
+            <!-- 未登入的状态 -->
+            <li class="layui-nav-item">
+                <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="{{route('login')}}">登入</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="{{route('register')}}">注册</a>
+            </li>
+            <li class="layui-nav-item layui-hide">
+                <a href="/app/qq/" onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})" title="QQ登入" class="iconfont icon-qq"></a>
+            </li>
+            <li class="layui-nav-item layui-hide">
+                <a href="/app/weibo/" onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})" title="微博登入" class="iconfont icon-weibo"></a>
+            </li>
+@else
+            <!-- 登入后的状态 -->
+                <li class="layui-nav-item">
+                    <a href="{{route('topics.create')}}" title="添加话题"><i class="layui-icon">&#xe654;</i>  </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="{{route('login')}}">消息<span class="layui-badge-dot"></span></a>
+                </li>
+            <li class="layui-nav-item">
+              <a class="fly-nav-avatar" href="javascript:;">
+                <cite class="layui-hide-xs">{{Auth::user()->name}}</cite>
+                <img src="{{Auth::user()->avatar}}">
+              </a>
+              <dl class="layui-nav-child">
+                <dd><a href="{{route('users.edit', Auth::id())}}"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
+                <dd><a href="{{route('users.show', Auth::id())}}"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a></dd>
+                <hr style="margin: 5px 0;">
+                <dd><a href="{{route('logout')}}" style="text-align: center;">退出</a></dd>
+              </dl>
+            </li>
+            @endguest
+        </ul>
     </div>
-</nav>
+</div>

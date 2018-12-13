@@ -1,9 +1,8 @@
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">
-            由 <a href="#" target="_blank">Tony</a> 设计和编码 <span style="color: #e27575;font-size: 14px;">❤</span>
-        </p>
+<div class="fly-footer">
+    <p>WeAPP 2018 &copy; <a href="mailto:646547989@qq.com" target="_blank">托小尼</a></p>
+    <p>
+        模板源自：  <a href="http://www.layui.com/template/fly/" target="_blank">Fly社区模版</a>
+    </p>
+</div>
 
-        <p class="pull-right"><a href="mailto:646547989@qq.com">联系我们</a></p>
-    </div>
-</footer>
+<script src="{{asset('/layui/layui.js')}}"></script>

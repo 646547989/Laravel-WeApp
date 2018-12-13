@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //用户授权判断是否有模型操作权限
+    public function checkAuth($model){
+        return $this->id == $model->user_id;
+    }
+
     //关联话题
     public function topics(){
         return $this->hasMany(Topic::class);

@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    {{-- CSRF Token --}}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>@yield('title', 'BBS') - WeAPP</title>
-
-    {{-- Styles --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>@yield('title')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{{asset('/layui/css/layui.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/global.css')}}">
+    @section('css')
+    @show
 </head>
-
 <body>
-<div id="app" class="{{ route_class() }}-page">
-
-    @include('index.layouts._header')
-
-    <div class="container">
-
-        @section('body')
-            @show
-
-    </div>
-
-    @include('index.layouts._footer')
+@include('index.layouts._header')
+<div class="layui-container margin-top-lg">
+    @section('body')
+    @show
 </div>
-
-{{-- Scripts --}}
-<script src="{{ asset('js/app.js') }}"></script>
+@include('index.layouts._footer')
+@section('js')
+    <script>
+        layui.use(['layer', 'element'], function () {
+            var layer = layui.layer;
+            var element = layui.element;
+            @include('index.layouts._error')
+            @include('index.layouts._message')
+        });
+    </script>
+@show
 </body>
 </html>
