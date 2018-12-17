@@ -36,7 +36,7 @@
                             </form>
 
                             @else
-                            &nbsp;
+                            &nbsp;{{$topic->user->intro}}
                         @endcan
                     </div>
 
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class="layui-col-md4">
-            @include('index.layouts._view_sidebar')
+            @include('index.layouts._view_sidebar', ['user'=> $topic->user])
 
         </div>
     </div>

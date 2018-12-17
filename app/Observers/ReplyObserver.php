@@ -10,6 +10,7 @@ namespace App\Observers;
 
 
 use App\Models\Reply;
+use App\Notifications\ReliesNotification;
 use Illuminate\Support\Facades\DB;
 
 class ReplyObserver
@@ -22,6 +23,8 @@ class ReplyObserver
     //评论成功，话题回复数自动加1
     public function created(Reply $reply){
         DB::table('topics')->where('id', $reply->topic_id)->increment('reply_count');
+        //回复后帖子作者收到通知
+        $reply->topic->user->notify(new ReliesNotification($reply));
     }
 
     //删除评论，话题回复数自动减1

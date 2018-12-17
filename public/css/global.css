@@ -567,3 +567,10 @@ body .fly-user-main{position: relative; min-height: 600px;}
 .margin-top-xxl{
   margin-top: 50px;
 }
+
+.about-author .author-mark .item-title{
+  font-size: 14px; color: #8590a6;
+}
+.about-author .author-mark .item-desc{
+  font-size: 18px;color: #175199; line-height: 30px;
+}

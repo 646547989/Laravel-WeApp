@@ -48,3 +48,7 @@ Route::get('test', function (\Carbon\Carbon $carbon){
     var_dump($data);
 });
 
+
+//通知入口
+Route::resource('notifications', 'Index\NotificationController', ['only' => ['index']]);
+

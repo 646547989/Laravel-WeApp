@@ -1,6 +1,6 @@
 @foreach($replies as $reply)
-<li data-id="111" class="jieda-daan">
-    <a name="item-1111111111"></a>
+<li class="jieda-daan">
+    <a name="reply{{ $reply->id }}"></a>
     <div class="detail-about detail-about-reply">
         <a class="fly-avatar" href="{{route('users.show', $reply->user->id)}}">
             <img src="{{$reply->user->avatar}}"

@@ -7,7 +7,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable{
+        notify as protected laravelNotify;
+    }
+    public function notify($instance)
+    {
+        //如果当前登录用户等于被通知的用户，直接返回不通知
+        if ($this->id == \Auth::id()){
+            return;
+        }
+        $this->increment('notification_count');
+        $this->laravelNotify($instance);
+    }
+
+    public function markAsRead(){
+        $this->notification_count=0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
+    }
 
     /**
      * The attributes that are mass assignable.

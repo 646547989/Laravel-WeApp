@@ -39,7 +39,7 @@
                     <a href="{{route('topics.create')}}" title="添加话题"><i class="layui-icon">&#xe654;</i>  </a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="{{route('login')}}">消息<span class="layui-badge-dot"></span></a>
+                    <a href="{{route('notifications.index')}}">消息@if(Auth::user()->notification_count > 0)<span class="layui-badge-dot"></span>@endif</a>
                 </li>
             <li class="layui-nav-item">
               <a class="fly-nav-avatar" href="javascript:;">
