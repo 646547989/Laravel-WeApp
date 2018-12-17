@@ -90,6 +90,7 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
+        $this->authorize('handle', $topic);
         $categories=Category::all();
         return view('index.topic.create_edit', compact('categories', 'topic'));
     }
@@ -103,6 +104,7 @@ class TopicController extends Controller
      */
     public function update(TopicRequest $request, Topic $topic)
     {
+        $this->authorize('handle', $topic);
         $topic->update($request->all());
         return redirect()->route('topics.show', $topic->id)->with('success', '话题更新成功');
     }
@@ -115,6 +117,7 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
+        $this->authorize('handle', $topic);
         $topic->delete();
         return redirect()->route('topics.index')->with('success', '话题删除成功');
     }

@@ -4,5 +4,7 @@
         模板源自：  <a href="http://www.layui.com/template/fly/" target="_blank">Fly社区模版</a>
     </p>
 </div>
-
+@if (app()->isLocal())
+    @include('sudosu::user-selector')
+@endif
 <script src="{{asset('/layui/layui.js')}}"></script>

@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ReplyPolicy extends Policy
+class Policy
 {
     use HandlesAuthorization;
 
@@ -19,8 +18,10 @@ class ReplyPolicy extends Policy
     {
         //
     }
-    //判断当前登录用户是否与回复用户或话题用户是同一个
-    public function handle(User $user, Reply $reply){
-        return $user->checkAuth($reply) || $user->checkAuth($reply->topic);
+
+    public function before($user, $ability){
+        if ($user->can('manage_contents')){
+            return true;
+        }
     }
 }

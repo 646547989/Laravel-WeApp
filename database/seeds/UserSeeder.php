@@ -27,9 +27,9 @@ class UserSeeder extends Seeder
         ];
         $user = \App\Models\User::create($tony);
         // 初始化用户角色，将 1 号用户指派为『站长』
-        //$user->assignRole('Founder');
+        $user->assignRole('Founder');
         $user = \App\Models\User::create($hou);
-        //$user->assignRole('Maintainer');
+        $user->assignRole('Maintainer');
         factory(\App\Models\User::class)->times(100)->create();
     }
 }

@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable{
         notify as protected laravelNotify;
     }
+    use HasRoles;
     public function notify($instance)
     {
         //如果当前登录用户等于被通知的用户，直接返回不通知

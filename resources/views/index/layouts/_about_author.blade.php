@@ -26,11 +26,11 @@
                 <a href="" class="item-title">话题</a>
                 <strong class="item-desc">{{$user->topics->count()}}</strong>
             </div>
-            <a class="layui-col-md4">
+            <div class="layui-col-md4">
                 <a href="" class="item-title">回答</a>
                 <strong class="item-desc">{{$user->replies->count()}}</strong>
             </div>
-            <a class="layui-col-md4">
+            <div class="layui-col-md4">
                 <a href="" class="item-title">加入</a>
                 <strong class="item-desc">{{$user->created_at->diffForHumans()}}</strong>
             </div>

@@ -47,6 +47,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //多用户切换
+        if (app()->isLocal()) {
+            $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
+        }
     }
 }
