@@ -10,6 +10,16 @@ use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 class VerificationCodeController extends Controller
 {
     public function store(VerificationCodeRequest $request, EasySms $easySms){
+        //判断用户提交的文本验证码是否正确
+        $captchaData=Cache::get($request->captcha_key);
+        if (!$captchaData){
+            return $this->response->error('文本验证码已失效', 422);
+        }
+
+        if (! hash_equals($captchaData['captcha_code'], $request->captcha_code)){
+            return $this->response->errorUnauthorized('验证码不正确');
+        }
+
         $phone=$request->phone;
         if (!app()->environment('production')){
             $code='9999';
@@ -19,7 +29,8 @@ class VerificationCodeController extends Controller
             try{
                 $easySms->send($phone, ['content'=>'尊敬的汇加客户，您的验证码为：【'.$code.'】，请及时输入。']);
             }catch (NoGatewayAvailableException $exception){
-                dd($exception);
+                $message = $exception->getException('yunpian')->getMessage();
+                return $this->response->errorInternal($message ?? '短信发送异常');
             }
         }
         $key=$phone.'_'.uniqid();
