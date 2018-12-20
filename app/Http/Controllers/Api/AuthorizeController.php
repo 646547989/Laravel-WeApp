@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\AuthorizeRequest;
 use App\Http\Requests\Api\AuthorizeSocialRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthorizeController extends Controller
 {
@@ -58,10 +59,50 @@ class AuthorizeController extends Controller
                 break;
         }
 
-        return $this->response->array(['token' => $user->id]);
+        $token=Auth::guard('api')->fromUser($user);
+
+        return $this->responsedWithToken($token)->setStatusCode(201);
     }
     //普通登录
-    public function store(AuthorizeRequest $request){}
+    public function store(AuthorizeRequest $request){
+        $username=$request->username;
+        //验证用户输入的是否是邮箱，否则输入的是手机号
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)){
+            $data['email']=$username;
+        }else{
+            $data['phone']=$username;
+        }
+        $data['password']=$request->password;
+
+        //验证用户输入的信息是否能匹配数据库
+        if (!$token=Auth::guard('api')->attempt($data)){
+            return $this->response->errorUnauthorized('用户名或密码错误');
+        }
+
+        //登录成功返回令牌、过期时间等
+        return $this->responsedWithToken($token)->setStatusCode(201);
+    }
+
+    //封装返回令牌
+    protected function responsedWithToken($token){
+        //登录成功返回令牌、过期时间等
+        return $this->response->array([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
+        ]);
+    }
+
+    //刷新token
+    public function update(){
+        $token = Auth::guard('api')->refresh();
+        return $this->responsedWithToken($token);
+    }
+    //删除token
+    public function destroy(){
+        Auth::guard('api')->logout();
+        return $this->response->noContent();
+    }
 
 
 }
